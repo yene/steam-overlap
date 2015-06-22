@@ -27,30 +27,34 @@
     }
 
   </style>
+  <script src="jquery-2.1.4.min.js"></script>
+  <script>
+    $( document ).ready(function() {
+      $.getJSON( "api.php", function( data ) {
+        var items = [];
+        $.each( data, function( key, val ) {
+          items.push( "<li id='" + key + "'><img src=http://media.steampowered.com/steamcommunity/public/images/apps/" + val.appid + "/" + val.img_logo_url + ".jpg>" + val.name + " Count: <strong>" + val.count + "</strong> </li>" );
+        });
+
+        $( "<ul/>", {
+          "class": "my-new-list",
+          html: items.join( "" )
+        }).appendTo( "body" );
+      });
+    })
+  </script>
 </head>
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li>Menu item</li>
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <article>
-      <header>
-        <h2>Article title</h2>
-        <p>Posted on <time datetime="2011-04-15T16:31:24+02:00">April 15th 2011</time> by <a href="#">Writer</a> â€“ <a href="#comments">6 comments</a></p>
-      </header>
-      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-    </article>
-  </main>
-  <aside>
-    <h2>About section</h2>
-    <p>Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
-  </aside>
-  <footer>
-    <p>Copyright 2011 Your name</p>
-  </footer>
+<h1>Games that overlap with your friends</h1>
+
+<div>
+ add friend textfield + button
+ * friend +, friend 2, friend 3
+</div>
+<div>
+adss
+</div>
+
+
 </body>
 </html>

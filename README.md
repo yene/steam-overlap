@@ -16,3 +16,4 @@ http://steamidfinder.com/
 * list always free coop games like TF2 and alien
 * list of all multiplayer games
 * list of all coop games
+* http://media.steampowered.com/steamcommunity/public/images/apps/{appid}/{hash}.jpg

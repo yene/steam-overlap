@@ -33,32 +33,30 @@ $gameOccurrence = array_filter($gameOccurrence, function($var){
   return $var > 1; // Filter games out that just one player owns.
 });
 
-foreach ($gameOccurrence as $key => &$game) {
-  $c = $game;
+$games = array();
+
+foreach ($gameOccurrence as $key => $value) {
+  $c = $value;
   $game = gameDetailsForID($key);
   $game["count"] = $c;
+  $games[] = $game;
 }
 
-echo "<pre>";
-var_dump($gameOccurrence);
-
-
-$opts = array('http' =>
-  array(
-    'user_agent' => 'SteamOverlap/1.0 (http://www.mysite.com/)'
-  )
-);
-$context = stream_context_create($opts);
-
+die(json_encode($games));
 
 function gamesForPlayerID($playerID) {
-  global $apiKey, $context;
+  global $apiKey;
 
   if (file_exists($playerID . ".json")) {
     $file = file_get_contents($playerID . ".json", FALSE);
   } else {
+    $opts = array('http' =>
+      array(
+        'user_agent' => 'SteamOverlap/1.0 (http://www.mysite.com/)'
+      )
+    );
+    $context = stream_context_create($opts);
     $url = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=' . $apiKey . '&steamid=' . $playerID . '&include_appinfo=1&include_played_free_games=1&format=json';
-    echo $url;
     $file = file_get_contents($url, FALSE, $context);
   }
   $json = json_decode($file, true);
@@ -70,6 +68,7 @@ function gameDetailsForID($gameID) {
   foreach ($allGames as $game) {
     if ($game["appid"] === $gameID) {
       return array(
+          "appid" => $gameID,
           "name" => $game["name"],
           "img_icon_url" => $game["img_icon_url"],
           "img_logo_url" => $game["img_logo_url"],
