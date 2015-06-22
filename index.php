@@ -33,7 +33,7 @@
       $.getJSON( "api.php", function( data ) {
         var items = [];
         $.each( data, function( key, val ) {
-          items.push( "<li id='" + key + "'><img src=http://media.steampowered.com/steamcommunity/public/images/apps/" + val.appid + "/" + val.img_logo_url + ".jpg>" + val.name + " Count: <strong>" + val.count + "</strong> </li>" );
+          items.push( "<li id='" + key + "'><img src=http://media.steampowered.com/steamcommunity/public/images/apps/" + val.appid + "/" + val.img_logo_url + ".jpg>" + val.name + " " + val.appid + " Count: <strong>" + val.count + "</strong> </li>" );
         });
 
         $( "<ul/>", {
