@@ -3,6 +3,8 @@
 require_once("config.php");
 require_once("PlayerData.php");
 
+$blacklist = [223530, 205790, 367540, 2430, 232210];
+
 $yene = "76561197964515697";
 $shadow = "76561198005110125";
 $blacky = "76561197994273896";
@@ -29,9 +31,12 @@ $gameOccurrence = array_reduce($listOfGames, function($carry, $item) {
   return $carry;
 }, array());
 arsort($gameOccurrence);
-$gameOccurrence = array_filter($gameOccurrence, function($var){
-  return $var > 1; // Filter games out that just one player owns.
+$gameOccurrence = array_filter($gameOccurrence, function($value){
+  return $value > 1; // Filter games out that just one player owns.
 });
+$gameOccurrence = array_filter($gameOccurrence, function($key) use ($blacklist) {
+  return !in_array($key, $blacklist);
+}, ARRAY_FILTER_USE_KEY);
 
 $games = array();
 
