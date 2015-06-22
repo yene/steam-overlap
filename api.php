@@ -17,12 +17,9 @@ $allGames = array();
 foreach ($users as $user) {
   $allGames = array_merge($allGames, $user->games);
 }
-echo "<pre>";
-$func = function($value) {
+$listOfGames = array_map(function($value) {
     return $value["appid"];
-};
-// 91600 = 2
-$listOfGames = array_map($func, $allGames);
+}, $allGames);
 $gameOccurrence = array_reduce($listOfGames, function($carry, $item) {
   if (array_key_exists($item, $carry)) {
     $carry[$item]++;
@@ -32,6 +29,17 @@ $gameOccurrence = array_reduce($listOfGames, function($carry, $item) {
   return $carry;
 }, array());
 arsort($gameOccurrence);
+$gameOccurrence = array_filter($gameOccurrence, function($var){
+  return $var > 1; // Filter games out that just one player owns.
+});
+
+foreach ($gameOccurrence as $key => &$game) {
+  $c = $game;
+  $game = gameDetailsForID($key);
+  $game["count"] = $c;
+}
+
+echo "<pre>";
 var_dump($gameOccurrence);
 
 
@@ -55,4 +63,18 @@ function gamesForPlayerID($playerID) {
   }
   $json = json_decode($file, true);
   return $json["response"]["games"];
+}
+
+function gameDetailsForID($gameID) {
+  global $allGames;
+  foreach ($allGames as $game) {
+    if ($game["appid"] === $gameID) {
+      return array(
+          "name" => $game["name"],
+          "img_icon_url" => $game["img_icon_url"],
+          "img_logo_url" => $game["img_logo_url"],
+      );
+    }
+  }
+  return array();
 }
