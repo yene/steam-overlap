@@ -2,7 +2,11 @@
 
 require_once("config.php");
 
-if (!isset($_GET["steamid"]) && !is_numeric($_GET["steamid"])) {
+if (!isset($_GET["steamid"])) {
+  die("no steamid given");
+}
+
+if (!is_numeric($_GET["steamid"])) {
   die("no steamid given");
 }
 
@@ -48,7 +52,11 @@ function gamesForPlayerID($playerID) {
     );
     $context = stream_context_create($opts);
     $url = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=' . $apiKey . '&steamid=' . $playerID . '&include_appinfo=1&include_played_free_games=1&format=json';
-    $file = file_get_contents($url, FALSE, $context);
+    $file = @file_get_contents($url, FALSE, $context);
+    if ($file === FALSE) {
+      http_response_code(404);
+      die("Error: User not found.");
+    }
   }
   $json = json_decode($file, true);
   return $json["response"]["games"];
