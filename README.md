@@ -1,11 +1,21 @@
 # Steam Overlap
 Show what steam games everybody shares
 
+# start server
+php -S 0.0.0.0:8000
+
+# test
+http://80.218.222.83/?ids=76561197964515697,76561197994273896,76561198005110125
+http://steamcommunity.com/profiles/76561197964515697?xml=1 => http://steamcommunity.com/id/yene/?xml=1&l=english
+
+
 # Todo
 * lookup the games for a user
+* prevent cross domain requests
 * lookup the user id for user name
 * lookup the multiplayer games only
 * sort by most games you have in common
+* add steam powered to the footer http://steamcommunity.com/dev
 
 # flow
 * login first -> select 3 friends from friends list
