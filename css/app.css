@@ -6,3 +6,14 @@ ul {
 .games-list li {
   margin-bottom: 5px;
 }
+
+.disable-list .games-list{
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.disable-button .button {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
