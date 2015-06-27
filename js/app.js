@@ -3,8 +3,6 @@ var games = []; // array, index is the column
 
 $( document ).ready(function() {
 
-  playerInfoForURL("http://steamcommunity.com/id/yene/?xml=1");
-
   var param = getUrlParameter('ids');
   if (param) {
     ids = param.split(",");
@@ -37,6 +35,9 @@ $( "#btn-add-yourself" ).on("click", function() {
     showResultInColumn(data, 0);
   });
   // change button to edit ->
+
+  // add id to url
+  addIDToURL(steamid);
 });
 
 function showResultInColumn(result, column) {
@@ -59,4 +60,13 @@ function getUrlParameter(sParam) {
             return sParameterName[1];
         }
     }
+}
+
+function addIDToURL(steamid) {
+  var param = getUrlParameter('ids');
+  if (param) {
+    window.history.pushState("object or string", "Title", "/?ids=" + param + "," + steamid);
+  } else {
+    window.history.pushState("object or string", "Title", "/?ids=" + steamid);
+  }
 }
