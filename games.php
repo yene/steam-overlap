@@ -110,9 +110,10 @@ die(json_encode($users));
 
 function gamesForID($steamID) {
   global $apiKey;
+  $folder = "cache/GetOwnedGames/";
 
-  if (file_exists($steamID . ".json")) {
-    $file = file_get_contents($steamID . ".json", FALSE);
+  if (file_exists($folder . $steamID . ".json")) {
+    $file = file_get_contents($folder . $steamID . ".json");
   } else {
     $opts = array('http' =>
       array(
@@ -126,6 +127,7 @@ function gamesForID($steamID) {
       http_response_code(404);
       die("Error: User not found.");
     }
+    file_put_contents($folder . $steamID . ".json", $file);
   }
   $json = json_decode($file, true);
   return $json["response"]["games"];
@@ -138,7 +140,26 @@ function userDetailsForIDs($steamID) {
     * check if we have cache files for id,
     * for the remaining load from valve
   */
+  $result = [];
 
+  $folder = "cache/GetPlayerSummaries/";
+  $ids = explode(",", $steamID);
+  $count = count($ids);
+  for ($i=0; $i < $count; $i++) {
+    $id = $ids[$i];
+    if (file_exists($folder . $id . ".json")) {
+      $file = file_get_contents($folder . $id . ".json", FALSE);
+      $result[] = json_decode($file, true);
+      unset($ids[$i]);
+    }
+  }
+
+  if (count($ids) == 0 ) { // if all are found in the cache go
+    return $result;
+  }
+
+  // download the rest
+  $steamID = implode(",", $ids);
 
   global $apiKey;
   $opts = array('http' =>
@@ -155,7 +176,13 @@ function userDetailsForIDs($steamID) {
   }
 
   $json = json_decode($file, true);
-  return $json["response"]["players"];
+  foreach ($json["response"]["players"] as $key => $value) {
+    $result[] = $value;
+    $id = $value["steamid"];
+    file_put_contents($folder . $id . ".json", json_encode($value, JSON_PRETTY_PRINT));
+  }
+  error_log("trying for " . $steamID);
+  return $result;
 }
 
 function gameDetails($appid, $allGames) {
