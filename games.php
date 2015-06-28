@@ -181,7 +181,6 @@ function userDetailsForIDs($steamID) {
     $id = $value["steamid"];
     file_put_contents($folder . $id . ".json", json_encode($value, JSON_PRETTY_PRINT));
   }
-  error_log("trying for " . $steamID);
   return $result;
 }
 
