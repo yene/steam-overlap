@@ -77,9 +77,9 @@ if (isset($_GET["freegames"]) && !$_GET["freegames"]) { // freegames=0 or freega
   }, ARRAY_FILTER_USE_KEY);
 }
 
-$gameOccurrence = array_filter($gameOccurrence, function($value){
+/*$gameOccurrence = array_filter($gameOccurrence, function($value){
   return $value > 1; // Filter games out that just one player owns.
-});
+});*/
 
 $games = [];
 $counter = 0;
