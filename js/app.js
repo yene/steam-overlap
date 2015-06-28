@@ -48,9 +48,14 @@ function showResultInColumn(result, column) {
       style = "class='disabled-game'";
     }
 
-    items.push( "<li id='" + key + "'><a title='" + val.name  + "' href='http://store.steampowered.com/app/" + val.appid +
-      "/'><img " + style + " src='http://media.steampowered.com/steamcommunity/public/images/apps/" +
-      val.appid + "/" + val.img_logo_url + ".jpg' alt='" + val.name  + "' ></a></li>" );
+    var played = "Never played.";
+    if (val.playtime_forever > 0 ) {
+      played = "Played for " + val.playtime_forever + " hours.";
+    }
+
+    var image = "http://media.steampowered.com/steamcommunity/public/images/apps/" + val.appid + "/" + val.img_logo_url + ".jpg";
+    items.push( "<li id='" + key + "'><a " + style + " title='" + val.name  + "' href='http://store.steampowered.com/app/" + val.appid +
+      "/' style='background-image: url(" + image + ");'>" + "</a></li>" );
   });
   $( ".games:eq(" + column + ") ul.games-list").empty().append(items.join( "" ));
 }
