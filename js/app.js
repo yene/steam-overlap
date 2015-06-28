@@ -2,41 +2,27 @@ var ids = []; // array, index is the column
 var games = []; // array, index is the column
 
 $( document ).ready(function() {
-
-  var param = getUrlParameter('ids');
-  if (param) {
-    $.getJSON( "games.php?steamids=" + param + "&singleplayer=0&freegames=0&played=1", function( data ) {
-      console.log(data);
-      data.forEach(function(element, index, array) {
-        if (index > 0 && index < 3) {
-          var template = $(".js-template");
-          template.clone().appendTo(".js-games");
-          template.removeClass("js-template");
-        }
-        showResultInColumn(element.games, index);
-
-        $( ".games:eq(" + index + ") .button").text(element.personaname);
-        $( ".games:eq(" + index + ") .button").css("background-image", "url(" + element.avatar + ")");
-
-        $( ".games:eq(" + index + ")").removeClass("disable-list");
-        $( ".games:eq(" + index + ")").removeClass("disable-button");
-      });
-    });
-  }
+  loadGames();
+  loadFriends();
 });
 
+$( "#btn-add-yourself" ).on("click", function(e) {
+  e.preventDefault();
 
-$( "#btn-add-yourself" ).on("click", function() {
   $('#myModal').foundation('reveal', 'close');
-  var steamid = $('#input-steamid').val();
-  $.getJSON( "games.php?steamid=" + steamid + "&singleplayer=0&freegames=0", function( data ) {
-    showResultInColumn(data, 0);
-  });
-  // change button to edit ->
+  var steamid = $('#input-steamid').val(); // TODO GET IT FROM STEAM BUTTON
 
   // add id to url
   addIDToURL(steamid);
+
+  // trigger load
+  loadGames();
+
+  // setup friends view
+  loadFriends();
 });
+
+
 
 function showResultInColumn(result, column) {
   var items = [];
@@ -77,5 +63,46 @@ function addIDToURL(steamid) {
     window.history.pushState("object or string", "Title", "/?ids=" + param + "," + steamid);
   } else {
     window.history.pushState("object or string", "Title", "/?ids=" + steamid);
+  }
+}
+
+function loadFriends() {
+  var param = getUrlParameter('ids');
+  if (param) {
+    var firstID = param.split(",")[0];
+    $.getJSON( "friends.php?steamid=" + firstID, function( data ) {
+      var items = [];
+      data.forEach(function(element, index, array) {
+        items.push( "<li><img src='" + element.avatarmedium + "' title='"  + (element.personaname) + "' alt='"  + (element.personaname) + "'></li>" );
+      });
+      $(".friends-list").empty().append(items.join( "" ));
+    });
+  }
+}
+
+function loadGames() {
+  var param = getUrlParameter('ids');
+  if (param) {
+    $.getJSON( "games.php?steamids=" + param + "&singleplayer=0&freegames=0&played=1", function( data ) {
+      data.forEach(function(element, index, array) {
+        if (index > 0 && index < 3) {
+          var template = $(".js-template");
+          template.clone().appendTo(".js-games");
+          template.removeClass("js-template");
+        }
+        showResultInColumn(element.games, index);
+
+        $( ".games:eq(" + index + ") .button").text(element.personaname);
+        $( ".games:eq(" + index + ") .button").css("background-image", "url(" + element.avatar + ")");
+
+        $( ".games:eq(" + index + ")").removeClass("disable-list");
+        $( ".games:eq(" + index + ")").removeClass("disable-button");
+
+
+        if (index < 3) {
+          $( ".games:eq(" + (index + 1) + ")").removeClass("disable-button");
+        }
+      });
+    });
   }
 }

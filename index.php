@@ -48,7 +48,7 @@ if (!empty($steam_login_verify)) {
         <div class="row js-games">
           <div class="large-3 medium-3 small-3 columns">
             <div class="callout panel games disable-list">
-              <a href="" class="button"  data-reveal-id="myModal">Add Yourself</a>
+              <a href="" class="button" data-reveal-id="myModal">Add Yourself</a>
               <ul class="games-list">
                 <li id="11"><a title="Counter-Strike: Source" href="http://store.steampowered.com/app/240/"><img src="http://media.steampowered.com/steamcommunity/public/images/apps/240/ee97d0dbf3e5d5d59e69dc20b98ed9dc8cad5283.jpg" alt="Counter-Strike: Source"></a></li>
                 <li id="37"><a title="Left 4 Dead" href="http://store.steampowered.com/app/500/"><img src="http://media.steampowered.com/steamcommunity/public/images/apps/500/0f67ee504d8f04ecd83986dd7855821dc21f7a78.jpg" alt="Left 4 Dead"></a></li>
@@ -66,7 +66,7 @@ if (!empty($steam_login_verify)) {
           </div>
           <div class="large-3 medium-3 small-3 columns js-template">
             <div class="callout panel games disable-list disable-button">
-              <a href="" class="button">Add a Friend</a>
+              <a href="" class="button" data-reveal-id="friendsModal">Add a Friend</a>
               <ul class="games-list">
                 <li id="11"><a title="Counter-Strike: Source" href="http://store.steampowered.com/app/240/"><img src="http://media.steampowered.com/steamcommunity/public/images/apps/240/ee97d0dbf3e5d5d59e69dc20b98ed9dc8cad5283.jpg" alt="Counter-Strike: Source"></a></li>
                 <li id="37"><a title="Left 4 Dead" href="http://store.steampowered.com/app/500/"><img src="http://media.steampowered.com/steamcommunity/public/images/apps/500/0f67ee504d8f04ecd83986dd7855821dc21f7a78.jpg" alt="Left 4 Dead"></a></li>
@@ -114,10 +114,32 @@ if (!empty($steam_login_verify)) {
       </form>
       <p class="lead">or login in through steam</p>
       <a href="<?=SteamSignIn::genUrl()?>"><img src="img/sits_large_noborder.png"></a>
-
-
       <a class="close-reveal-modal" aria-label="Close">&#215;</a>
     </div>
+
+    <div id="friendsModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+      <h2 id="modalTitle">Select a Friend</h2>
+      <ul class="friends-list">
+      </ul>
+      <br style="clear: both;">
+      <p class="lead">Or enter his ID, example: 76561197964515697</p>
+      <form>
+        <div class="row">
+          <div class="large-12 columns">
+            <div class="row collapse">
+              <div class="small-10 columns">
+                <input id="input-steamid" type="text" placeholder="Steam ID">
+              </div>
+              <div class="small-2 columns">
+                <a id="btn-add-yourself" href="" class="button postfix">Go</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+
 
     <script src="js/vendor/jquery.js"></script>
     <script src="js/foundation.min.js"></script>

@@ -42,6 +42,12 @@ ul {
   opacity: 0.3;
 }
 
+.friends-list li {
+  float: left;
+  margin: 1px;
+  cursor: pointer;
+}
+
 .button {
   height: 67px;
   display: flex;
