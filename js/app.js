@@ -8,12 +8,10 @@ $( document ).ready(function() {
     $.getJSON( "games.php?steamids=" + param + "&singleplayer=0&freegames=0&played=1", function( data ) {
       console.log(data);
       data.forEach(function(element, index, array) {
-        if (index > 3) {
-          // TODO add more columns
-          return;
-        }
-        if (index < 3) {
-          $( ".games:eq(" + (index+1) + ")").removeClass("disable-button");
+        if (index > 0) {
+          var template = $(".js-template");
+          template.clone().appendTo(".js-games");
+          template.removeClass("js-template");
         }
         showResultInColumn(element.games, index);
 
