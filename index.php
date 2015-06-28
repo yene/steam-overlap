@@ -44,7 +44,7 @@ if (!empty($steam_login_verify)) {
     </div>
 
     <div class="row">
-      <div class="large-12 medium-12 columns" style="border: 1px solid red;">
+      <div class="large-12 medium-12 columns">
         <div class="row js-games">
           <div class="large-3 medium-3 small-3 columns">
             <div class="callout panel games disable-list">

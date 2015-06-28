@@ -8,7 +8,7 @@ $( document ).ready(function() {
     $.getJSON( "games.php?steamids=" + param + "&singleplayer=0&freegames=0&played=1", function( data ) {
       console.log(data);
       data.forEach(function(element, index, array) {
-        if (index > 0) {
+        if (index > 0 && index < 3) {
           var template = $(".js-template");
           template.clone().appendTo(".js-games");
           template.removeClass("js-template");
