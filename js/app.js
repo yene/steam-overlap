@@ -11,10 +11,10 @@ $( "#btn-add-yourself" ).on("click", function(e) {
   e.preventDefault();
 
   $('#myModal').foundation('reveal', 'close');
-  var steamid = $('#input-steamid').val(); // TODO GET IT FROM STEAM BUTTON
+  var steamID = $('#input-steamid').val(); // TODO GET IT FROM STEAM BUTTON
 
   // add id to url
-  addIDToURL(steamid);
+  addIDToURL(steamID);
 
   // trigger load
   loadGames();
@@ -26,12 +26,13 @@ $( "#btn-add-yourself" ).on("click", function(e) {
 $( "#btn-add-friend" ).on("click", function(e) {
   e.preventDefault();
 
-  $('#friendModal').foundation('reveal', 'close');
-  var steamid = $('#input-friend-steamid').val(); // TODO GET IT FROM STEAM BUTTON
-  steamid = getSteamID(steamid);
-  console.log(steamid);
-  //addIDToURL(steamid);
-  //loadGames();
+  $('#friendsModal').foundation('reveal', 'close');
+  var steamID = $('#input-friend-steamid').val(); // TODO GET IT FROM STEAM BUTTON
+  steamID = getSteamID(steamID);
+  if (steamID) {
+    addIDToURL(steamID);
+    loadGames();
+  }
 });
 
 
@@ -126,6 +127,14 @@ function loadGames() {
 }
 
 function getSteamID(p) {
+
+  p = p.trim();
+
+  // check for valid steam64 id
+  if (!isNaN(parseInt(p, 10))) {
+    return p;
+  }
+
   // http://steamcommunity.com/profiles/76561197960473866 -> get last part
   if (p.includes("steamcommunity.com/profiles/")) {
     var parts = p.split("/").filter(Boolean);
@@ -138,10 +147,9 @@ function getSteamID(p) {
     // http://steamcommunity.com/id/schubi89/ -> backend convert custom url to steamid
     $.getJSON( "customURL.php?id=" + id, function( data ) {
       var steamID = data[0];
-      console.log(steamID);
+      addIDToURL(steamID);
+      loadGames();
     });
   }
-
-
-  return p;
+  return false;
 }

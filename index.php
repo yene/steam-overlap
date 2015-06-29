@@ -96,14 +96,14 @@ if (!empty($steam_login_verify)) {
 
 
     <div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-      <h2 id="modalTitle">Enter your Steam ID</h2>
-      <p class="lead">For example: 76561197964515697</p>
+      <h2 id="modalTitle">Enter your Steam ID or Steam URL</h2>
+      <p class="lead">For example: http://steamcommunity.com/id/schubi89/</p>
       <form>
         <div class="row">
           <div class="large-12 columns">
             <div class="row collapse">
               <div class="small-10 columns">
-                <input id="input-steamid" type="text" placeholder="Steam ID">
+                <input id="input-steamid" type="text" placeholder="Steam ID / Steam URL">
               </div>
               <div class="small-2 columns">
                 <a id="btn-add-yourself" href="" class="button postfix">Go</a>
@@ -122,13 +122,13 @@ if (!empty($steam_login_verify)) {
       <ul class="friends-list">
       </ul>
       <br style="clear: both;">
-      <p class="lead">Or enter his ID, example: 76561197964515697</p>
+      <p class="lead">Or enter his Steam ID or Steam URL, example: http://steamcommunity.com/id/schubi89/</p>
       <form>
         <div class="row">
           <div class="large-12 columns">
             <div class="row collapse">
               <div class="small-10 columns">
-                <input id="input-friend-steamid" type="text" placeholder="Steam ID">
+                <input id="input-friend-steamid" type="text" placeholder="Steam ID / Steam URL">
               </div>
               <div class="small-2 columns">
                 <a id="btn-add-friend" href="" class="button postfix">Go</a>
