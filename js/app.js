@@ -4,6 +4,7 @@ var games = []; // array, index is the column
 $( document ).ready(function() {
   loadGames();
   loadFriends();
+
 });
 
 $( "#btn-add-yourself" ).on("click", function(e) {
@@ -27,8 +28,10 @@ $( "#btn-add-friend" ).on("click", function(e) {
 
   $('#friendModal').foundation('reveal', 'close');
   var steamid = $('#input-friend-steamid').val(); // TODO GET IT FROM STEAM BUTTON
-  addIDToURL(steamid);
-  loadGames();
+  steamid = getSteamID(steamid);
+  console.log(steamid);
+  //addIDToURL(steamid);
+  //loadGames();
 });
 
 
@@ -120,4 +123,25 @@ function loadGames() {
       });
     });
   }
+}
+
+function getSteamID(p) {
+  // http://steamcommunity.com/profiles/76561197960473866 -> get last part
+  if (p.includes("steamcommunity.com/profiles/")) {
+    var parts = p.split("/").filter(Boolean);
+    return parts[parts.length-1];
+  }
+
+  if (p.includes("steamcommunity.com/id/")) {
+    var parts = p.split("/").filter(Boolean); // removes empty string from array
+    var id = parts[parts.length-1];
+    // http://steamcommunity.com/id/schubi89/ -> backend convert custom url to steamid
+    $.getJSON( "customURL.php?id=" + id, function( data ) {
+      var steamID = data[0];
+      console.log(steamID);
+    });
+  }
+
+
+  return p;
 }
