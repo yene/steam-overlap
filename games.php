@@ -59,20 +59,20 @@ $gameOccurrence = array_reduce($listOfGames, function($carry, $item) {
 }, array());
 arsort($gameOccurrence);
 
-$blacklist = json_decode(file_get_contents("blacklist.json"));
+$blacklist = json_decode(file_get_contents("lists/blacklist.json"));
 $gameOccurrence = array_filter($gameOccurrence, function($key) use ($blacklist) {
   return !in_array($key, $blacklist);
 }, ARRAY_FILTER_USE_KEY);
 
 if (isset($_GET["singleplayer"]) && !$_GET["singleplayer"]) { // singleplayer=0 or singleplayer=1(default)
-  $singleplayer = json_decode(file_get_contents("singleplayer.json"));
+  $singleplayer = json_decode(file_get_contents("lists/singleplayer.json"));
   $gameOccurrence = array_filter($gameOccurrence, function($key) use ($singleplayer) {
     return !in_array($key, $singleplayer);
   }, ARRAY_FILTER_USE_KEY);
 }
 
 if (isset($_GET["freegames"]) && !$_GET["freegames"]) { // freegames=0 or freegames=1(default)
-  $freegames = json_decode(file_get_contents("freegames.json"));
+  $freegames = json_decode(file_get_contents("lists/freegames.json"));
   $gameOccurrence = array_filter($gameOccurrence, function($key) use ($freegames) {
     return !in_array($key, $freegames);
   }, ARRAY_FILTER_USE_KEY);
