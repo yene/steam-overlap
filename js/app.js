@@ -12,15 +12,12 @@ $( "#btn-add-yourself" ).on("click", function(e) {
 
   $('#myModal').foundation('reveal', 'close');
   var steamID = $('#input-steamid').val(); // TODO GET IT FROM STEAM BUTTON
-
-  // add id to url
-  addIDToURL(steamID);
-
-  // trigger load
-  loadGames();
-
-  // setup friends view
-  loadFriends();
+  steamID = getSteamID(steamID);
+  if (steamID) {
+    addIDToURL(steamID);
+    loadGames();
+    loadFriends();
+  }
 });
 
 $( "#btn-add-friend" ).on("click", function(e) {
@@ -149,6 +146,7 @@ function getSteamID(p) {
       var steamID = data[0];
       addIDToURL(steamID);
       loadGames();
+      loadFriends();
     });
   }
   return false;
