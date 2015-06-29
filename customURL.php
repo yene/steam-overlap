@@ -10,7 +10,7 @@ die(json_encode(steamIDforCustomID($_GET["id"])));
 function steamIDforCustomID($id) {
   $opts = array('http' =>
     array(
-      'user_agent' => 'SteamOverlap/1.0 (http://www.mysite.com/)'
+      'user_agent' => 'SteamOverlap/1.0 (http://www.steamoverlap.com/)'
     )
   );
   $context = stream_context_create($opts);

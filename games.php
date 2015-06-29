@@ -118,7 +118,7 @@ function gamesForID($steamID) {
   } else {
     $opts = array('http' =>
       array(
-        'user_agent' => 'SteamOverlap/1.0 (http://www.mysite.com/)'
+        'user_agent' => 'SteamOverlap/1.0 (http://www.steamoverlap.com/)'
       )
     );
     $context = stream_context_create($opts);
