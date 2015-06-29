@@ -45,7 +45,6 @@ ul {
 .friends-list li {
   float: left;
   margin: 1px;
-  cursor: pointer;
 }
 
 .button {

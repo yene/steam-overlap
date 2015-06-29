@@ -128,10 +128,10 @@ if (!empty($steam_login_verify)) {
           <div class="large-12 columns">
             <div class="row collapse">
               <div class="small-10 columns">
-                <input id="input-steamid" type="text" placeholder="Steam ID">
+                <input id="input-friend-steamid" type="text" placeholder="Steam ID">
               </div>
               <div class="small-2 columns">
-                <a id="btn-add-yourself" href="" class="button postfix">Go</a>
+                <a id="btn-add-friend" href="" class="button postfix">Go</a>
               </div>
             </div>
           </div>

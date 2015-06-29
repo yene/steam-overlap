@@ -22,6 +22,14 @@ $( "#btn-add-yourself" ).on("click", function(e) {
   loadFriends();
 });
 
+$( "#btn-add-friend" ).on("click", function(e) {
+  e.preventDefault();
+
+  $('#friendModal').foundation('reveal', 'close');
+  var steamid = $('#input-friend-steamid').val(); // TODO GET IT FROM STEAM BUTTON
+  addIDToURL(steamid);
+  loadGames();
+});
 
 
 function showResultInColumn(result, column) {
@@ -73,9 +81,16 @@ function loadFriends() {
     $.getJSON( "friends.php?steamid=" + firstID, function( data ) {
       var items = [];
       data.forEach(function(element, index, array) {
-        items.push( "<li><img src='" + element.avatarmedium + "' title='"  + (element.personaname) + "' alt='"  + (element.personaname) + "'></li>" );
+        items.push( "<li><a href='' data-steamid='" + element.steamid + "'><img src='" + element.avatarmedium + "' title='"  + (element.personaname) + "' alt='"  + (element.personaname) + "'></a></li>" );
       });
       $(".friends-list").empty().append(items.join( "" ));
+      $( ".friends-list a" ).on("click", function(e) {
+        e.preventDefault();
+        var friendSteamID = $(this).data("steamid");
+        addIDToURL(friendSteamID);
+        loadGames();
+        $('#friendsModal').foundation('reveal', 'close');
+      });
     });
   }
 }
