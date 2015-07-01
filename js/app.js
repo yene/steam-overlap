@@ -139,23 +139,20 @@ function loadGames() {
   if (param) {
     $.getJSON( "games.php?steamids=" + param + "&singleplayer=0&freegames=0&played=1", function( data ) {
       data.forEach(function(element, index, array) {
-        if (index > 0 && index < 3 && $(".js-games > .columns").length < 4) {
-          var template = $(".js-template");
-          template.clone().appendTo(".js-games");
-          template.removeClass("js-template");
-        }
-        showResultInColumn(element.games, index);
+        if (index < 4) { // TODO: in the future dynamic columns, for now only 4
+          showResultInColumn(element.games, index);
 
-        $( ".games:eq(" + index + ") .button").text(element.personaname);
-        $( ".games:eq(" + index + ") .button").css("background-image", "url(" + element.avatar + ")");
+          $( ".games:eq(" + index + ") .button").text(element.personaname);
+          $( ".games:eq(" + index + ") .button").css("background-image", "url(" + element.avatar + ")");
 
-        $( ".games:eq(" + index + ")").removeClass("disable-list");
-        $( ".games:eq(" + index + ")").removeClass("disable-button");
+          $( ".games:eq(" + index + ")").removeClass("disable-list");
+          $( ".games:eq(" + index + ")").removeClass("disable-button");
 
-        $( ".games:eq(" + index + ") .btn-add").data("index", index);
+          $( ".games:eq(" + index + ") .btn-add").data("index", index);
 
-        if (index < 3) {
-          $( ".games:eq(" + (index + 1) + ")").removeClass("disable-button");
+          if (index < 3) {
+            $( ".games:eq(" + (index + 1) + ")").removeClass("disable-button");
+          }
         }
       });
     });
