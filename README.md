@@ -2,12 +2,15 @@
 Show what steam games everybody shares
 
 # Todo
--steamID
+* refresh static lists in the html
+* Steamoverlap, click on used button replace user
 * make custom mouseover for the friends list -> on mouseover show username (http://jsfiddle.net/tDQWN/)
 * only accept requests from same domain
 * click on the exisiting friend/user should replace his games list
 * clear button on top of the user (X)
 * add filter for singleplayer, free games
+* if friend is just one word try the profile param
+* load friends only when first url changes
 
 # test
 http://steamcommunity.com/profiles/76561197964515697?xml=1 => http://steamcommunity.com/id/yene/?xml=1&l=english
