@@ -166,15 +166,10 @@ function getSteamID(p) {
   // check for valid steam64 id
   if (!isNaN(parseInt(p, 10))) {
     return p;
-  }
-
-  // http://steamcommunity.com/profiles/76561197960473866 -> get last part
-  if (p.includes("steamcommunity.com/profiles/")) {
+  } else if (p.includes("steamcommunity.com/profiles/")) {
     var parts = p.split("/").filter(Boolean);
     return parts[parts.length-1];
-  }
-
-  if (p.includes("steamcommunity.com/id/")) {
+  } else { //if (p.includes("steamcommunity.com/id/")) { try our luck with the API
     var parts = p.split("/").filter(Boolean); // removes empty string from array
     var id = parts[parts.length-1];
     // http://steamcommunity.com/id/schubi89/ -> backend convert custom url to steamid
