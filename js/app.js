@@ -1,5 +1,6 @@
 var ids = []; // array, index is the column
 var games = []; // array, index is the column
+var buttonClicked = 0;
 
 $( document ).ready(function() {
   loadGames();
@@ -7,14 +8,26 @@ $( document ).ready(function() {
 
 });
 
+$(".js-games").on("click", ".btn-add", function(e) {
+  e.preventDefault();
+  var index = $(this).data("index");
+  buttonClicked = index;
+  if (index == 0) {
+    $('#myModal').foundation('reveal', 'open');
+  } else {
+    $('#friendsModal').foundation('reveal', 'open');
+  }
+});
+
+
 $( "#btn-add-yourself" ).on("click", function(e) {
   e.preventDefault();
-
   $('#myModal').foundation('reveal', 'close');
-  var steamID = $('#input-steamid').val(); // TODO GET IT FROM STEAM BUTTON
+
+  var steamID = $('#input-steamid').val();
   steamID = getSteamID(steamID);
   if (steamID) {
-    addIDToURL(steamID);
+    addSteamIDToURL(buttonClicked, steamID);
     loadGames();
     loadFriends();
   }
@@ -24,10 +37,10 @@ $( "#btn-add-friend" ).on("click", function(e) {
   e.preventDefault();
 
   $('#friendsModal').foundation('reveal', 'close');
-  var steamID = $('#input-friend-steamid').val(); // TODO GET IT FROM STEAM BUTTON
+  var steamID = $('#input-friend-steamid').val();
   steamID = getSteamID(steamID);
   if (steamID) {
-    addIDToURL(steamID);
+    addSteamIDToURL(buttonClicked, steamID);
     loadGames();
   }
 });
@@ -51,6 +64,7 @@ function showResultInColumn(result, column) {
       "/' style='background-image: url(" + image + ");'>" + "</a></li>" );
   });
   $( ".games:eq(" + column + ") ul.games-list").empty().append(items.join( "" ));
+
 }
 
 function getUrlParameter(sParam) {
@@ -66,12 +80,36 @@ function getUrlParameter(sParam) {
     }
 }
 
-function addIDToURL(steamid) {
+function steamIDFromURL(index) {
   var param = getUrlParameter('ids');
   if (param) {
-    window.history.pushState("object or string", "Title", "/?ids=" + param + "," + steamid);
+    return param.split(",")[index];
   } else {
-    window.history.pushState("object or string", "Title", "/?ids=" + steamid);
+    return false;
+  }
+}
+
+function addSteamIDToURL(index, steamID) {
+  var param = getUrlParameter('ids');
+  if (param) {
+    var arr = param.split(",");
+    if (arr.length < index) {
+      window.history.pushState("object or string", "Title", "/?ids=" + param + "," + steamID);
+    } else { // replace
+      arr[index] = steamID;
+      window.history.pushState("object or string", "Title", "/?ids=" + arr.join(","));
+    }
+  } else {
+    window.history.pushState("object or string", "Title", "/?ids=" + steamID);
+  }
+}
+
+function addIDToURL(steamID) {
+  var param = getUrlParameter('ids');
+  if (param) {
+    window.history.pushState("object or string", "Title", "/?ids=" + param + "," + steamID);
+  } else {
+    window.history.pushState("object or string", "Title", "/?ids=" + steamID);
   }
 }
 
@@ -88,7 +126,7 @@ function loadFriends() {
       $( ".friends-list a" ).on("click", function(e) {
         e.preventDefault();
         var friendSteamID = $(this).data("steamid");
-        addIDToURL(friendSteamID);
+        addSteamIDToURL(buttonClicked, friendSteamID);
         loadGames();
         $('#friendsModal').foundation('reveal', 'close');
       });
@@ -101,7 +139,7 @@ function loadGames() {
   if (param) {
     $.getJSON( "games.php?steamids=" + param + "&singleplayer=0&freegames=0&played=1", function( data ) {
       data.forEach(function(element, index, array) {
-        if (index > 0 && index < 3) {
+        if (index > 0 && index < 3 && $(".js-games > .columns").length < 4) {
           var template = $(".js-template");
           template.clone().appendTo(".js-games");
           template.removeClass("js-template");
@@ -114,6 +152,7 @@ function loadGames() {
         $( ".games:eq(" + index + ")").removeClass("disable-list");
         $( ".games:eq(" + index + ")").removeClass("disable-button");
 
+        $( ".games:eq(" + index + ") .btn-add").data("index", index);
 
         if (index < 3) {
           $( ".games:eq(" + (index + 1) + ")").removeClass("disable-button");
