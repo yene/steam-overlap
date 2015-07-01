@@ -3,7 +3,7 @@
 require_once("config.php");
 require_once("userDetails.php");
 
-define("MAXGAMES", 100);
+define("MAXGAMES", 80);
 
 if (!isset($_GET["steamids"])) {
   http_response_code(404);
