@@ -22,8 +22,14 @@ $users = userDetailsForIDs($param);
 
 $allGames = [];
 
-for ($i = 0; $i < count($users); $i++) {
+$c = count($users);
+for ($i = 0; $i < $c; $i++) {
   $id = $users[$i]["steamid"];
+
+  if ($users[$i]["communityvisibilitystate"] == 1) { //the profile is not visible to you
+    unset($users[$i]);
+    continue;
+  }
 
   // remove unneeded data
   unset($users[$i]["communityvisibilitystate"]);
@@ -106,7 +112,6 @@ for ($i = 0; $i < count($users); $i++) {
   unset($users[$i]["ownedGames"]);
 }
 
-error_log(count($games));
 die(json_encode($users));
 
 function gamesForID($steamID) {
