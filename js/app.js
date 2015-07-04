@@ -166,7 +166,7 @@ function getSteamID(p) {
   // check for valid steam64 id
   if (!isNaN(parseInt(p, 10))) {
     return p;
-  } else if (p.includes("steamcommunity.com/profiles/")) {
+  } else if (p.indexOf("steamcommunity.com/profiles/")  > -1) {
     var parts = p.split("/").filter(Boolean);
     return parts[parts.length-1];
   } else { //if (p.includes("steamcommunity.com/id/")) { try our luck with the API
