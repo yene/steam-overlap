@@ -25,12 +25,11 @@ $( "#btn-add-yourself" ).on("click", function(e) {
   $('#myModal').foundation('reveal', 'close');
 
   var steamID = $('#input-steamid').val();
-  steamID = getSteamID(steamID);
-  if (steamID) {
+  getSteamID(steamID, function(steamID) {
     addSteamIDToURL(buttonClicked, steamID);
     loadGames();
     loadFriends();
-  }
+  });
 });
 
 $( "#btn-add-friend" ).on("click", function(e) {
@@ -38,11 +37,10 @@ $( "#btn-add-friend" ).on("click", function(e) {
 
   $('#friendsModal').foundation('reveal', 'close');
   var steamID = $('#input-friend-steamid').val();
-  steamID = getSteamID(steamID);
-  if (steamID) {
+  getSteamID(steamID, function(steamID) {
     addSteamIDToURL(buttonClicked, steamID);
     loadGames();
-  }
+  });
 });
 
 
@@ -159,26 +157,23 @@ function loadGames() {
   }
 }
 
-function getSteamID(p) {
-
+function getSteamID(p, cb) {
   p = p.trim();
 
   // check for valid steam64 id
   if (!isNaN(parseInt(p, 10))) {
-    return p;
+    cb(p);
+    return;
   } else if (p.indexOf("steamcommunity.com/profiles/")  > -1) {
     var parts = p.split("/").filter(Boolean);
-    return parts[parts.length-1];
+    cb(parts[parts.length-1]);
   } else { //if (p.includes("steamcommunity.com/id/")) { try our luck with the API
     var parts = p.split("/").filter(Boolean); // removes empty string from array
     var id = parts[parts.length-1];
     // http://steamcommunity.com/id/schubi89/ -> backend convert custom url to steamid
     $.getJSON( "customURL.php?id=" + id, function( data ) {
       var steamID = data[0];
-      addIDToURL(steamID);
-      loadGames();
-      loadFriends();
+      cb(steamID);
     });
   }
-  return false;
 }
