@@ -2,6 +2,7 @@
 Show what steam games everybody shares
 
 # Todo
+* clean readme
 * refresh static lists in the html
 * Steamoverlap, click on used button replace user
 * make custom mouseover for the friends list -> on mouseover show username (http://jsfiddle.net/tDQWN/)
@@ -11,6 +12,11 @@ Show what steam games everybody shares
 * add filter for singleplayer, free games
 * if friend is just one word try the profile param
 * load friends only when first url changes
+* add a filter to friends list
+* add spinner for ajax
+* app breaks when adding private profile, like 76561197974899907
+* are private profiles visible if you login through steam oauth?
+* when profile is private show warning
 
 # test
 http://steamcommunity.com/profiles/76561197964515697?xml=1 => http://steamcommunity.com/id/yene/?xml=1&l=english
