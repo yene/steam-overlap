@@ -22,6 +22,11 @@ $friends = userDetailsForIDs(implode(",", $ids));
 // delete unused keys
 $c = count($friends);
 for ($i=0; $i < $c; $i++) {
+  if ($friends[$i]["communityvisibilitystate"] == 1) { //the profile is not visible to you
+    unset($friends[$i]);
+    continue;
+  }
+
   unset($friends[$i]["communityvisibilitystate"]);
   unset($friends[$i]["profilestate"]);
   unset($friends[$i]["lastlogoff"]);
