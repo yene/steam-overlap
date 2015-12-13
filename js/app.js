@@ -117,9 +117,11 @@ function loadFriends() {
     var firstID = param.split(",")[0];
     $.getJSON( "friends.php?steamid=" + firstID, function( data ) {
       var items = [];
-      data.forEach(function(element, index, array) {
+      for (var prop in data) {
+        var element = data[prop];
         items.push( "<li><a href='' data-steamid='" + element.steamid + "'><img src='" + element.avatarmedium + "' title='"  + (element.personaname) + "' alt='"  + (element.personaname) + "'></a></li>" );
-      });
+      }
+
       $(".friends-list").empty().append(items.join( "" ));
       $( ".friends-list a" ).on("click", function(e) {
         e.preventDefault();
