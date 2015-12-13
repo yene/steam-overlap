@@ -64,7 +64,7 @@ function friendsForID($steamID) {
     $file = @file_get_contents($url, FALSE, $context);
     if ($file === FALSE) {
       http_response_code(404);
-      die("Error: User not found.");
+      die("Error: This profile is private.");
     }
     file_put_contents($folder . $steamID . ".json", $file);
   }

@@ -115,7 +115,8 @@ function loadFriends() {
   var param = getUrlParameter('ids');
   if (param) {
     var firstID = param.split(",")[0];
-    $.getJSON( "friends.php?steamid=" + firstID, function( data ) {
+    var jqxhr = $.getJSON("friends.php?steamid=" + firstID)
+    .done( function( data ) {
       var items = [];
       for (var prop in data) {
         var element = data[prop];
@@ -130,7 +131,11 @@ function loadFriends() {
         loadGames();
         $('#friendsModal').foundation('reveal', 'close');
       });
+    })
+    .fail(function(data) {
+      alert(data.responseText);
     });
+
   }
 }
 
