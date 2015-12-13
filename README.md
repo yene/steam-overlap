@@ -2,20 +2,29 @@
 Show what steam games you have in common with your friends.
 ![screenshot](screenshot.png)
 
+# Setup
+* It requires PHP 5.6
+
 # Todo
+* blacklist http://store.steampowered.com/app/397080/
+* kick out foundation for another stylekit and custom layout
 * add filter for singleplayer in UI
 * add filter for free games in UI
 * add spinner for ajax request
 * when profile is private show warning (like 76561197974899907)
-* sort games by total playtime
+* sort games by total playtime (of all players)
 * sort games alphabetically
 * fix cron that deletes old files
 * add UI to filter for minimum playtime
+* better error dialog
+
+# Private profiles
+Profiles with communityvisibilitystate=1 are not used.
+
 
 # Bigger Todos
-* search for players by nickname (http://steamcommunity.com/search/)
-* increase limit of 4 columns to 10
 * dynamically add columns
+* sort games by rating
 
 # Notes
 * http://steamidfinder.com/
